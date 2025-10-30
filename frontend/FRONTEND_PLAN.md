@@ -24,7 +24,34 @@
 - Route configuration for reminder pages
 - Global state management setup
 
-### 2. Reminder List Page (`src/pages/RemindersPage.tsx`)
+### 2. Login Page (`src/pages/LoginPage.tsx`)
+
+**Components:**
+
+- `LoginForm` - Main login form component
+- Form fields: Email input, Password input
+- `Login` button
+- Link to register (if registration is needed)
+
+**Form Components:**
+
+- Uses existing shadcn components: `Input`, `Button`, `Label`, `Card`
+- Form validation using React Hook Form + Zod
+
+**Validation:**
+
+- Zod schema for form validation
+- Required field validation
+- Email format validation
+
+**Features:**
+
+- Form submission handling
+- Success/error notifications
+- Redirect after successful login
+- Integration with existing auth service
+
+### 3. Reminder List Page (`src/pages/RemindersPage.tsx`)
 
 **Components:**
 
@@ -32,6 +59,7 @@
 - `ReminderCard` - Individual reminder item
 - `EmptyState` - When no reminders exist
 - Navigation to create reminder
+- Authentication protection
 
 **Utils:**
 
@@ -47,7 +75,7 @@
 
 - `src/types/reminder.ts` - Reminder interface definition
 
-### 3. Create Reminder Page (`src/pages/CreateReminderPage.tsx`)
+### 4. Create Reminder Page (`src/pages/CreateReminderPage.tsx`)
 
 **Components:**
 
@@ -73,7 +101,7 @@
 - Success/error notifications
 - Redirect after creation
 
-### 4. Common Components
+### 5. Common Components
 
 #### `src/components/reminder/ReminderCard.tsx`
 
@@ -95,7 +123,7 @@
 - Header with app title
 - Navigation structure
 
-### 5. Services & Utils
+### 6. Services & Utils
 
 #### `src/services/reminderService.ts`
 
@@ -116,7 +144,7 @@
 - `isValidFutureDate(date: Date): boolean`
 - `parseDateTime(dateStr: string, timeStr: string): Date`
 
-### 6. Types & Interfaces
+### 7. Types & Interfaces
 
 #### `src/types/reminder.ts`
 
@@ -135,7 +163,7 @@ interface CreateReminderData {
 }
 ```
 
-### 7. Hooks
+### 8. Hooks
 
 #### `src/hooks/useReminders.ts`
 
@@ -182,6 +210,7 @@ interface CreateReminderData {
 
 **New Files:**
 
+- `src/pages/LoginPage.tsx`
 - `src/pages/RemindersPage.tsx`
 - `src/pages/CreateReminderPage.tsx`
 - `src/components/reminder/CreateReminderForm.tsx`

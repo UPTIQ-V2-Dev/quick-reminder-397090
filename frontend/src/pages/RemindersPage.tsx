@@ -1,11 +1,31 @@
 import { useReminders } from '../hooks/useReminders';
 import { ReminderList } from '../components/reminder/ReminderList';
 import { Button } from '../components/ui/button';
-import { AlertCircle, CalendarPlus, RefreshCw } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { AlertCircle, CalendarPlus, RefreshCw, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { authService } from '../services/auth';
+import { toast } from 'sonner';
 
 export const RemindersPage = () => {
     const { data: reminders = [], isLoading, error, refetch } = useReminders();
+    const navigate = useNavigate();
+
+    const logoutMutation = useMutation({
+        mutationFn: () => authService.logout(),
+        onSuccess: () => {
+            toast.success('Logged out successfully');
+            navigate('/login');
+        },
+        onError: (error: any) => {
+            console.error('Logout error:', error);
+            toast.error('Logout failed. Please try again.');
+        }
+    });
+
+    const handleLogout = () => {
+        logoutMutation.mutate();
+    };
 
     if (isLoading) {
         return (
@@ -53,12 +73,22 @@ export const RemindersPage = () => {
                 <div className='mb-8'>
                     <div className='flex items-center justify-between mb-2'>
                         <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>My Reminders</h1>
-                        <Link to='/create'>
-                            <Button className='bg-blue-600 hover:bg-blue-700 text-white'>
-                                <CalendarPlus className='h-4 w-4 mr-2' />
-                                Create Reminder
+                        <div className='flex items-center gap-3'>
+                            <Link to='/create'>
+                                <Button className='bg-blue-600 hover:bg-blue-700 text-white'>
+                                    <CalendarPlus className='h-4 w-4 mr-2' />
+                                    Create Reminder
+                                </Button>
+                            </Link>
+                            <Button
+                                variant='outline'
+                                onClick={handleLogout}
+                                disabled={logoutMutation.isPending}
+                            >
+                                <LogOut className='h-4 w-4 mr-2' />
+                                {logoutMutation.isPending ? 'Logging out...' : 'Logout'}
                             </Button>
-                        </Link>
+                        </div>
                     </div>
                     <p className='text-gray-600 dark:text-gray-400'>Stay organized and never miss important tasks</p>
                 </div>
