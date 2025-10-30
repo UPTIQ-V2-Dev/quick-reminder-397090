@@ -27,14 +27,14 @@ export type AgentConfig = {
 export const AGENT_CONFIGS: AgentConfig[] = [
     {
         id: '833aa20d-fbac-4594-85f7-b174496033f4',
-        name: 'Slack Reminder Agent',
-        description: 'An agent to manage and send reminders in Slack.',
+        name: 'Slack Reminder Agentt',
+        description: 'An agent to manage and send reminders in Slack.k',
         triggerEvents: [
             {
                 type: 'async',
-                name: 'reminder_created',
+                name: 'reminder textarea',
                 description:
-                    'When the user creates a reminder with text and datetime, the details are sent to the agent to schedule the reminder in Slack.'
+                    'When the user enters a reminder in the reminder text area and selects a date and time, the details are sent to the agent to create the reminder.'
             }
         ],
         config: {
