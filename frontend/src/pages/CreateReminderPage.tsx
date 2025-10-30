@@ -5,6 +5,7 @@ import { CreateReminderInput } from '../types/reminder';
 import { parseDateTime } from '../utils/dateUtils';
 import { Button } from '../components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { emitter } from '../agentSdk';
 
 export const CreateReminderPage = () => {
     const navigate = useNavigate();
@@ -18,6 +19,17 @@ export const CreateReminderPage = () => {
 
         createReminderMutation.mutate(reminderData, {
             onSuccess: () => {
+                // Emit event to Slack Reminder Agent
+                emitter.emit({
+                    agentId: '833aa20d-fbac-4594-85f7-b174496033f4',
+                    event: 'reminder textarea',
+                    payload: {
+                        text: reminderData.text,
+                        dateTime: reminderData.dateTime.toISOString(),
+                        scheduledFor: reminderData.dateTime
+                    }
+                });
+
                 navigate('/');
             }
         });
