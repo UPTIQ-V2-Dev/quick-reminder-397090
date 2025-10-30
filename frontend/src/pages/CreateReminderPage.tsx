@@ -22,7 +22,7 @@ export const CreateReminderPage = () => {
                 // Emit event to Slack Reminder Agent
                 emitter.emit({
                     agentId: '833aa20d-fbac-4594-85f7-b174496033f4',
-                    event: 'reminder textarea',
+                    event: 'reminder_created',
                     payload: {
                         text: reminderData.text,
                         dateTime: reminderData.dateTime.toISOString(),
